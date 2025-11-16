@@ -94,16 +94,39 @@ sys_uptime(void)
 }
 
 /////////////////// New addition ///////////////////////
-int sys_thread_create(void){
-  return -1;
+int 
+sys_thread_create(void)
+{
+  uint *tid;
+  void *func;
+  void *arg;
+
+  if (argptr(0, (char**)&tid, sizeof(*tid)) < 0)
+    return -1;
+  if (argptr(1, (char**)&func, sizeof(func)) < 0)
+    return -1;
+  if (argptr(2, (char**)&arg, sizeof(arg)) < 0)
+    return -1;
+
+  return thread_create(tid, func, arg);
 }
 
-int sys_thread_exit(void){
-  return -1;
+
+
+int sys_thread_exit(void)
+{
+  thread_exit();   // Does not return
+  return 0;        // Never reached, but keeps compiler happy
 }
 
-int sys_thread_join(void){
-  return -1;
+int sys_thread_join(void)
+{
+  uint tid;
+
+  if (argint(0, (int*)&tid) < 0)
+    return -1;
+
+  return thread_join(tid);
 }
 
 int sys_barrier_init(void)

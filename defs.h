@@ -121,6 +121,10 @@ int             wait(void);
 void            wakeup(void*);
 void            yield(void);
 int             waitpid(int pid); //// waitpid function definition 
+int             thread_create(uint*, void* (*)(void*), void*); ///part c function defintion
+void            thread_exit(void);
+int             thread_join(uint);
+
 
 // swtch.S
 void            swtch(struct context**, struct context*);
